@@ -7,7 +7,6 @@
     "start": "node server.js",
     "dev": "node --watch server.js",
     "test-db-connection": "node models/connections.js"
-
   },
   "keywords": [],
   "author": "",
