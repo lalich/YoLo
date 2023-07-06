@@ -16,8 +16,8 @@
 
 ## Mock UP of UI
 
-- ![Desktop View](http://imgur.com)
-- ![Mobile View](http://imgur.com)
+- ![Desktop View]/Users/marklalich/Desktop/Desktop - Mark’s MacBook Pro/kale/unit2/project/public/MiRo.png
+- ![Mobile View]/Users/marklalich/Desktop/Desktop - Mark’s MacBook Pro/kale/unit2/project/public/MiRo.png
 
 ## List of Backend Endpoints
 
@@ -28,6 +28,4 @@
 
 ## ERD (ENTITY RELATIONSHIP DIAGRAM)
 
-![PICTURE OF ERD](http://imgur.com)
-
-- [Free ERD Diagram Tool](https://dbdiagram.io/home)
+![PICTURE OF ERD] /Users/marklalich/Desktop/Desktop - Mark’s MacBook Pro/kale/unit2/project/public/MiRo.png
