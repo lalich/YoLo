@@ -5,7 +5,7 @@
 - [**LINK TO GITHUB**] https://github.com/lalich/YoLo.git
 - [**LINK TO DEPLOYED WEBSITE**] https://yolo-application.onrender.com/
 - **List of Technologies used:** HTML, JS, CSS, Node, Express, EJS, Mongo, Auth
-- [**LINK TO TRELLO**]https://trello.com/b/AcPosBBM/yolo-app
+- [**LINK TO TRELLO**]https://miro.com/app/board/uXjVMFQnZAA=/#tpicker-content
 
 ## Description
 
@@ -28,4 +28,4 @@
 
 ## ERD (ENTITY RELATIONSHIP DIAGRAM)
 
-![PICTURE OF ERD] /Users/marklalich/Desktop/Desktop - Mark’s MacBook Pro/kale/unit2/project/public/MiRo.png
+![PICTURE OF ERD] https://miro.com/app/board/uXjVMFQnZAA=/#tpicker-content
