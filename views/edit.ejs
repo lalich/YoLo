@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YoLo Time</title>
+    <title>You messed up if you here!</title>
     <link rel="icon" type="image/x-icon" href="/YoLo.png">
     <%- include("./partials/files.ejs") %>
 </head>
 <body>
-    <h1> Good luck changing your plan in the middle of the spin...</h1>
+    <h1> You done played yo'Self... its now or Wendys!</h1>
 
-    <a href="/yolo"><button>Back To the $how</button></a>
+    <a href="/yolos"><button>Back To the $how</button></a>
 </article>
 
 <br/></br></br>
-    <form method=POST action="/yolo/<%= yolo._id%>?_method=PUT">
+    <form method=POST action="/yolos/<%= yolo._id%>?_method=PUT">
         What is the Ticker? <input type="text" name="ticker" value="<%= yolo.ticker %>"/>
         <br/>
         What amount are you putting into this YoLo? Double Down? <input type="number" name="amount" value="<%= yolo.amount %>"/>

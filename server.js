@@ -40,12 +40,27 @@ app.get('/yolos', async (req,res) => {
             res.render('yolos.ejs', {yolos: allYolos})
 })
 
-
-
-app.get('/show', (req, res) => {
-        res.render('yolo.ejs')
+app.get('/yolos/:id', async (req, res) => {
+    const disYolo = await Yolos.findById(req.params.id)
+    res.render('indiYolo.ejs', { yolos: disYolo})
 })
 
+app.get('/yolos/:id/edit', async (req, res) => {
+    const yolo = await Yolos.findById(req.params.id)
+    res.render('edit.ejs', { yolo })
+})
+
+app.put('/yolos/:id', async (req, res) => {
+    req.body.yolo = req.body.yolo === 'on' ? true : false
+    await Yolos.findByIdAndUpdate(req.params.id, req.body)
+    res.redirect('/yolos')
+})
+
+app.delete('/yolos/:id', async (req,res) => {
+    await Yolos.findByIdAndDelete(req.params.id)
+    const deletedYolo = await Yolos.findByIdAndDelete(req.params.id)
+    res.redirect('/yolos')
+})
 
 
 

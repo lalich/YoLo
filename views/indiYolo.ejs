@@ -4,7 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YoLo Time</title>
+    <title>Review da YoLo</title>
     <link rel="icon" type="image/x-icon" href="/YoLo.png">
     <%- include("./partials/files.ejs") %>
 </head>
+<body>
+
+    <h1>You spun your luck on this ...<%= yolos.ticker %> </h1>
+<br>
+<a href="/yolos"><button>Back to my list o YoLos</button></a>
+<br>
+        <h2> Here are the betting specs you made for <%= yolos.ticker %> :</h2>
+
+        <h3>$$$ Amount: $ <%= yolos.amount %></h3>
+
+        <h5>Your plan is to make <%= yolos.profitP %>% over the next <%= yolos.duration %> days with <%= yolos.yolo ? 'Diamond Hands!' :
+        'lil paper ' + yolos.riskP +'% weak hands!' %>
+        </h5>
+<br>
+<br>
+            <a href="/yolos/<%= yolos._id %>/edit"><button>Sniffles... but I need to make change$</button></a>
+            <br>
+            <br>
+            <form method="POST" action="/yolos/<%= yolos._id %>?_method=DELETE">
+                    <input type="submit" value="Save whatever is left or already won please" />
+
+   
+
+</body>
+</html>
