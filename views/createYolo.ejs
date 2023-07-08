@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YoLo Time</title>
+    <link rel="icon" type="image/x-icon" href="/YoLo.png">
+    <%- include("./partials/files.ejs") %>
+</head>
+<body>
+    <h1 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; text-align: center; text-decoration: underline;">
+        Welcome to the YoLo Dome! </br> Set your self free by answering these six sexy questions! </h1>
+
+    <form action="/yolo" method="POST" >
+        What is your ticker? <input type="text" name="ticker" />
+        <br/>
+        How Much $ are you betting? $<input type="number" name="amount" />
+        <br/>
+        Is this a YoLo? <input type="checkbox" name="yolo"  /> YoLo = 100% @ Risk
+        <br/>
+        If not, what percentage are you willing to lose? <input type="number" name="riskP" /> %
+        <br/>
+        At what point do your hands turn to paper? <input type="number" name="profitP" /> % return you are willing to take?
+        <br/>
+        What is the duration of the spin at the casino? <input type="number" name="duration" /> Days
+
+
+
+
+
+
+
+
+</body>
+</html>

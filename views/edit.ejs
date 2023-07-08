@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YoLo Time</title>
+    <link rel="icon" type="image/x-icon" href="/YoLo.png">
+    <%- include("./partials/files.ejs") %>
+</head>
+<body>
+    <h1> Good luck changing your plan in the middle of the spin...</h1>
+
+    <a href="/yolo"><button>Back To the $how</button></a>
+</article>
+
+<br/></br></br>
+    <form method=POST action="/yolo/<%= yolo._id%>?_method=PUT">
+        What is the Ticker? <input type="text" name="ticker" value="<%= yolo.ticker %>"/>
+        <br/>
+        What amount are you putting into this YoLo? Double Down? <input type="number" name="amount" value="<%= yolo.amount %>"/>
+        <br/>
+        Is this a YoLo? <input type="checkbox" name="yolo" <%= yolo.yolo ? 'checked' : '' %> />
+        <br/></br>
+        If not a YoLo what percent will you risk? <input type="number" name="riskP" value="<%= yolo.riskP %>"/>
+        <br/></br>
+        What is your profit percentage target? <input type="number" name="profitP" value="<%= yolo.profitP %>"/>
+        <br/>
+        What is the desired duration of this YoLo? <input type="number" name="duration" value="<%= yolo.duration %>"/>
+        </br>
+        </br>
+        <input type="submit" value="Muli-YoLo!" />
+
+    </form>
+
+</body>
+</html>
