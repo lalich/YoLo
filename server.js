@@ -26,8 +26,19 @@ app.get('/addie', (req, res) => {
         res.render('createYolo.ejs')
 })
 
+app.post('/yolos', async (req, res) => {
+    req.body.yolo = req.body.yolo === 'on' ? true : false
+        await Yolos.create(req.body)
 
+        console.log('YoLo App Activated', req.body)
+        res.redirect('/yolos')
+})
 
+app.get('/yolos', async (req,res) => {
+    const allYolos = await Yolos.find({})
+        console.log(allYolos)
+            res.render('yolos.ejs', {yolos: allYolos})
+})
 
 
 
@@ -39,7 +50,18 @@ app.get('/show', (req, res) => {
 
 
 
-
+// clears out DB on server shutdown
+process.on('SIGINT', async () => {
+    try {
+        //delete the YOLOS until next session! 
+        await Yolos.deleteMany({})
+        console.log('The YoLo app is starting fresh')
+        process.exit(0)
+    } catch (error) {
+        console.error('Failed to reset the YoloAPP', error)
+        process.exit(1)
+    }
+})
 
 
 

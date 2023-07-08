@@ -10,6 +10,6 @@ const yoloSchema = new mongoose.Schema({
     duration: Number
 })
 
-const Yolo = mongoose.model('yolo', yoloSchema)
+const Yolos = mongoose.model('yolo', yoloSchema)
 
-module.exports = Yolo
+module.exports = Yolos
