@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Addie me as a Gambler</title>
+    <link rel="icon" type="image/x-icon" href="/YoLo.png">
+    <%- include("./partials/files.ejs") %>
+</head>
+<body>
+    <h1 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;" > 
+            Get Ready to Learn the Power of the Dark Side!</h1>
+
+
+            <form action="/user/signup" method="POST">
+
+
+                    <legend>Create your Account</legend>
+
+                <label>UserID: <input type="text" name="UserID" required /></label>
+                <label>Password: <input type="password" name="password" required /></label>
+                <input type="submit" value="Welcome to the Dark Side" />
+
+
+        </form>
+
+        
+    </body>
+    </html>
