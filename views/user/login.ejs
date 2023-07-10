@@ -6,18 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log-In to the YoLo App</title>
     <link rel="icon" type="image/x-icon" href="/YoLo.png">
-    <%- include("./partials/files.ejs") %>
+    <%- include("../partials/files.ejs") %>
 </head>
 <body>
-    <h1 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;" > 
+    <h1 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; text-decoration: underline;" > 
             Log-In you Degenerate!</h1>
 
             <form action="/user/login" method="POST">
 
 
-                <legend>Time to $hine</legend>
-
-            <label>UserID: <input type="text" name="UserID" required /></label>
+                <legend style="text-align: justify; margin-left: 55px;">Time to $hine</legend>
+<br>
+            <label>UserID: <input type="text" name="username" required /></label>
             <label>Password: <input type="password" name="password" required /></label>
             <input type="submit" value="LFG" />
 

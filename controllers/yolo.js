@@ -5,7 +5,7 @@ const Yolos = require('../models/yolo')
 const router = express.Router()
 
 // require login and create id to use the application
-router.use((req, res) => {
+router.use((req, res, next) => {
     if(req.session.loggedIn){
         next()
     } else {

@@ -8,7 +8,7 @@ const router = express.Router()
 
 // route to create new degen
 router.get('/signup', (req, res) => {
-    res.render('user/signup.ejs')
+    res.render('./user/signup.ejs')
 })
 
 
@@ -17,26 +17,31 @@ router.post('/signup', async (req, res) => {
         req.body.password = await bcrypt.hash(req.body.password, await bcrypt.genSalt(10))
         await User.create(req.body)
         res.redirect('/user/login')
-    } catch{
-        res.send('nah dawg kick rocks...(this means you errored out, please try again)')
+    } catch(error) {
+        console.error('You aint Degen enough!', error)
+        res.send('nah dawg kick rocks...(this means you errored out, <a href="/user/signup">please try again!</a>)')
     }
 })
 
-
 router.get('/login', async (req, res) => {
-    const user = await User.findOne({ username: req.body.username })
+    res.render('user/login.ejs')
+})
 
+router.post('/login', async (req, res) => {
+    const user = await User.findOne({ username: req.body.username })
+console.log(user)
     if(!user) {
-        res.send('nah homie, you got to <a href="/signup"> sign that ID up!</a>')
+        res.send('nah homie, you got to <a href="/user/signup"> sign that ID up!</a>')
     } else {
         const passmatches = bcrypt.compareSync(req.body.password, user.password)
         if (passmatches) {
-            req.session.username = req.session.username
+            req.session.username = req.body.username
             req.session.loggedIn = true
-            res.redirect('yolos')
+            res.redirect('/yolos')
+      
         
         } else {
-            res.send('wrong password')
+            res.send('You aint using the <a href="/user/login">magic word(s)</a>')
         }
     }
 })

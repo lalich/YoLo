@@ -6,19 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Addie me as a Gambler</title>
     <link rel="icon" type="image/x-icon" href="/YoLo.png">
-    <%- include("./partials/files.ejs") %>
+    <%- include("../partials/files.ejs") %>
 </head>
 <body>
-    <h1 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;" > 
+    <h1 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; text-decoration: underline;" > 
             Get Ready to Learn the Power of the Dark Side!</h1>
 
-
+<br>
             <form action="/user/signup" method="POST">
 
 
                     <legend>Create your Account</legend>
+                    
+                    <br>
 
-                <label>UserID: <input type="text" name="UserID" required /></label>
+                <label>UserID: <input type="text" name="username" required /></label>
                 <label>Password: <input type="password" name="password" required /></label>
                 <input type="submit" value="Welcome to the Dark Side" />
 

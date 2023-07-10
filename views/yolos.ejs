@@ -16,7 +16,7 @@
     <nav>
         <a href="/addie">YoLo Addie Time!</a>
     </nav>
-<h3>These are your YoLo attempts... so far!</h3>
+<h3>These are your <%=user.username %> YoLo attempts... so far!</h3>
     
 <ul>
     <% yolos.forEach(yolo => { %>
@@ -28,6 +28,7 @@
         <% }) %>
     </ul>
 
- 
+ <br>
+        <a href="/user/logout"><button>I'm Out of Here</button></a>
     </body>
     </html>
