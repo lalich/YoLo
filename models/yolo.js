@@ -7,7 +7,8 @@ const yoloSchema = new mongoose.Schema({
     yolo: Boolean,
     riskP: Number,
     profitP: Number,
-    duration: Number
+    duration: Number,
+    username: String
 })
 
 const Yolos = mongoose.model('yolo', yoloSchema)

@@ -63,7 +63,7 @@ res.redirect('/yolos')
 })
 
 
-router.delete(':id', async (req,res) => {
+router.delete('/:id', async (req,res) => {
 await Yolos.findByIdAndDelete(req.params.id)
 const deletedYolo = await Yolos.findByIdAndDelete(req.params.id)
 res.redirect('/yolos')

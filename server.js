@@ -40,18 +40,18 @@ app.get('/', (req, res) => {
 
 
 
-// clears out DB on server shutdown
-process.on('SIGINT', async () => {
-    try {
-        //delete the YOLOS until next session! 
-        await Yolos.deleteMany({})
-        console.log('The YoLo app is starting fresh')
-        process.exit(0)
-    } catch (error) {
-        console.error('Failed to reset the YoloAPP', error)
-        process.exit(1)
-    }
-})
+// clears out DB on server shutdown, no need anymore since all is attached to login
+// process.on('SIGINT', async () => {
+//     try {
+//         //delete the YOLOS until next session! 
+//         await Yolos.deleteMany({})
+//         console.log('The YoLo app is starting fresh')
+//         process.exit(0)
+//     } catch (error) {
+//         console.error('Failed to reset the YoloAPP', error)
+//         process.exit(1)
+//     }
+// })
 
 
     const PORT = process.env.PORT
