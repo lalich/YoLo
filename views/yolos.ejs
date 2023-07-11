@@ -9,14 +9,14 @@
     <%- include("./partials/files.ejs") %>
 </head>
 <body>
-    <h1>Welcome to your Yolo Application</h1>
+    <h1 style="text-decoration: underline;">Welcome to the <%= user%> Yolo Application</h1>
 
 
 
     <nav>
-        <a href="/addie">YoLo Addie Time!</a>
+        <a href="/yolos/addie">YoLo Addie Time!</a>
     </nav>
-<h3>These are your <%=user.username %> YoLo attempts... so far!</h3>
+<h3>These are your YoLo attempts... so far!</h3>
     
 <ul>
     <% yolos.forEach(yolo => { %>

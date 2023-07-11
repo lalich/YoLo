@@ -27,8 +27,11 @@ app.use(session({
     saveUninitialized: true,
     resave: false,
 }))
-app.use('/yolo', YoloRouter)
+
+// has the controllers talking up a storm... be sure to place appropriately!
+app.use('/yolos', YoloRouter)
 app.use('/user', UserRouter)
+
 // Routes
 
 app.get('/', (req, res) => {

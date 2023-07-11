@@ -38,7 +38,6 @@ console.log(user)
             req.session.username = req.body.username
             req.session.loggedIn = true
             res.redirect('/yolos')
-      
         
         } else {
             res.send('You aint using the <a href="/user/login">magic word(s)</a>')
@@ -46,7 +45,9 @@ console.log(user)
     }
 })
 
-router.get('logout', (req, res) => {
+
+
+router.get('/logout', (req, res) => {
     req.session.destroy(err => {
         res.redirect('/')
     })
