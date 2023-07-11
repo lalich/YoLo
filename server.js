@@ -35,7 +35,7 @@ app.use('/user', UserRouter)
 // Routes
 
 app.get('/', (req, res) => {
-    res.sendFile('/Users/marklalich/Desktop/Desktop - Mark’s MacBook Pro/kale/unit2/project/home.html')
+    res.render('home.ejs')
     })
 
 
