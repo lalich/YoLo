@@ -8,21 +8,23 @@
     <link rel="icon" type="image/x-icon" href="/YoLo.png">
     <%- include("../partials/files.ejs") %>
 </head>
-<body>
-    <h1 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; text-decoration: underline;" > 
+<body style=" background-image: url('/dreamCtrue.jpeg'); background-size: cover; background-repeat: repeat;">
+    <h1 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; text-decoration: underline; color: aliceblue;" > 
             Get Ready to Learn the Power of the Dark Side!</h1>
 
 <br>
-            <form action="/user/signup" method="POST">
+            <form style="color: aliceblue;" action="/user/signup" method="POST">
 
 
-                    <legend>Create your Account</legend>
+                    <legend style="font-size: larger;">Create your Account</legend>
                     
                     <br>
 
                 <label>UserID: <input type="text" name="username" required /></label>
+                <br><br>
                 <label>Password: <input type="password" name="password" required /></label>
-                <input type="submit" value="Welcome to the Dark Side" />
+                <br><br>
+                <input style="background-color: rgb(48, 162, 48);" type="submit" value="Welcome to the Dark Side" />
 
 
         </form>

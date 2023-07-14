@@ -8,24 +8,30 @@
     <link rel="icon" type="image/x-icon" href="/YoLo.png">
     <%- include("./partials/files.ejs") %>
 </head>
-<body>
-            <h1 style="font-size: xx-large; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
-            text-align: center; text-decoration: wavy;">Welcome to Wally Street Roulette YoLos Wheel!</h1>
 
-    <br/>
-    <a href="/yolos"><button>Back To the $how</button></a>
+<body style="background-image: url('/Courage.jpeg'); background-size: cover; background-repeat: no-repeat;
+background-color: crimson;">
+            
+<h1 style="font-size: xx-large; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+            text-align: center; color: aliceblue; text-decoration: wavy;">
+            Welcome to Wally Street Roulette YoLos Wheel!</h1>
+
+    
+    <div style="display: flex; justify-content: center;">
+    <a href="/yolos"><button style="background-color: coral;">Back To the $how</button></a>
+    </div>
     <br>
-    <br>
-    <form action="/yolos/wsryC" method="POST" >
+    
+    <form style="color: yellow; font-size: larger;" action="/yolos/wsryC" method="POST" >
 
   
         How Much $ are you Yoloing? $<input type="number" name="amount" />
         <br/><br/>
         At what point do your hands turn to paper? <input type="number" name="profitP" /> % return you are willing to take?
         <br/><br/>
+<br><br><br><br><br>
 
-
-        <div style="display: flex; justify-content: center; text-align: center;">
+        <div style="display: flex; justify-content: center; text-align: center; font-size: xx-large;">
             <a href="/yolos/wsryC">Spin the WSRoulette Wheel!
         <br>
                     <input type="image" src="/roulette.jpeg" alt="wsry" width="369" height="223"/>

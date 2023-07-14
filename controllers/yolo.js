@@ -50,13 +50,13 @@ router.post('/wsryC', async (req, res) => {
                         'XOM', 'T', 'NIO', 'BABA', 'MSFT', 'TSLA', 'NVDA', 'HD', 'PG', 'KO',
                         'COST', 'CRM', 'MCD', 'NFLX', 'F', 'AMD', 'TMUS', 'NKE', 'DIS', 'RTX',
                         'BA', 'CAT', 'UNP', 'TM', 'PEP', 'SPY', 'QQQ', 'PLTR']
-console.log(tickerSet[7])
+// console.log(tickerSet[7])
 
         function randomT(tickerSet) { 
                     const randomIndex= Math.floor(Math.random() * tickerSet.length)
                         return tickerSet[randomIndex]
                         }
-                        console.log(randomT(tickerSet))
+                        // console.log(randomT(tickerSet))
 
     req.body.ticker = randomT(tickerSet)
     req.body.amount = req.body.amount

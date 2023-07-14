@@ -8,18 +8,21 @@
     <link rel="icon" type="image/x-icon" href="/YoLo.png">
     <%- include("../partials/files.ejs") %>
 </head>
-<body>
-    <h1 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; text-decoration: underline;" > 
+<body style=" background-image: url('/vault.jpeg'); background-size: cover; background-repeat: repeat;">
+    <h1 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; text-decoration: underline; color: antiquewhite;" > 
             Log-In you Degenerate!</h1>
 
-            <form action="/user/login" method="POST">
+            <form style="color: antiquewhite; font-size: larger;" action="/user/login" method="POST">
 
 
-                <legend style="text-align: justify; margin-left: 55px;">Time to $hine</legend>
+                <legend style="text-align: justify; margin-left: 55px; text-decoration: wavy; font-size: x-large;">
+                    Time to $hine</legend>
 <br>
             <label>UserID: <input type="text" name="username" required /></label>
+            <br><br>
             <label>Password: <input type="password" name="password" required /></label>
-            <input type="submit" value="LFG" />
+            <br>
+            <input style="background-color: gold; margin: 30px" type="submit" value="LFG" />
 
 
     </form>

@@ -8,13 +8,14 @@
     <link rel="icon" type="image/x-icon" href="/YoLo.png">
     <%- include("./partials/files.ejs") %>
 </head>
-<body>
+<body style="background-color: rgba(64, 225, 99, 0.431);">
 
-    <h1>You spun your luck on this ...<%= yolos.ticker %> </h1>
+    <h1 style="color: rgb(13, 100, 13)">You spun your luck on that... <%= yolos.ticker %> </h1>
 <br>
 <a href="/yolos"><button>Back to my list o YoLos</button></a>
 <br>
-        <h2> Here are the betting specs you made for <%= yolos.ticker %> :</h2>
+        <h2> Here are the betting specs you made for: </h2<br> <h2 style="font-size: larger; font-family: 'Courier New', Courier, monospace;
+        text-decoration: underline; font-size: xx-large; color: rgb(15, 43, 156)"> <%= yolos.ticker %> </h2>
 
         <h3>$$$ Amount: $ <%= yolos.amount %></h3>
 

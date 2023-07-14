@@ -8,10 +8,10 @@
     <link rel="icon" type="image/x-icon" href="/YoLo.png">
     <%- include("./partials/files.ejs") %>
 </head>
-<body>
+<body style="background-color: rgba(55, 55, 62, 0.431);">
     <h1> You done played yo'Self... its now or Wendys!</h1>
 
-    <a href="/yolos"><button>Back To the $how</button></a>
+    <a href="/yolos"><button style="color:rgb(217, 217, 226); background-color: blueviolet;">Back To the $how</button></a>
 </article>
 
 <br/></br></br>
@@ -29,7 +29,9 @@
         What is the desired duration of this YoLo? <input type="number" name="duration" value="<%= yolo.duration %>"/>
         </br>
         </br>
-        <input type="submit" value="Muli-YoLo!" />
+        <div style="display: flex; justify-content: center;">
+            <input type="image" src="/YoLo.png" alt="yolos" width="420" height="123"/>
+                </div>
 
     </form>
 
