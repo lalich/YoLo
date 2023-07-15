@@ -19,7 +19,7 @@ router.use((req, res, next) => {
 
 router.get('/', async (req,res) => {
     const allYolos = await Yolos.find({ username: req.session.username })
-        console.log(allYolos)
+       
             res.render('yolos.ejs', {yolos: allYolos, user: req.session.username})
     })
 
@@ -41,11 +41,13 @@ router.post('/', async (req, res) => {
 
         await Yolos.create(req.body)
 
-    console.log('YoLo App Activated', req.body)
+    
     res.redirect('/yolos')
 })
 
 router.post('/wsryC', async (req, res) => {
+    try{
+        
     const tickerSet = ['AAPL', 'GOOGL', 'AMZN', 'META', 'INTC', 'SOFI', 'A', 'GME', 'BB', 'CVX',
                         'XOM', 'T', 'NIO', 'BABA', 'MSFT', 'TSLA', 'NVDA', 'HD', 'PG', 'KO',
                         'COST', 'CRM', 'MCD', 'NFLX', 'F', 'AMD', 'TMUS', 'NKE', 'DIS', 'RTX',
@@ -58,16 +60,17 @@ router.post('/wsryC', async (req, res) => {
                         }
                         // console.log(randomT(tickerSet))
 
-    req.body.ticker = randomT(tickerSet)
-    req.body.amount = req.body.amount
-    req.body.yolo = req.body.yolo = true
-    req.body.riskP = 100
-    req.body.profitP = req.body.profitP
-    req.body.duration = 30
-    req.body.username = req.session.username
-
-        try{
-            await Yolos.create(req.body)
+    let yoloNew = {
+        ticker: randomT(tickerSet),
+        amount: req.body.amount,
+        yolo: true,
+        riskP: 100,
+        profitP: req.body.profitP,
+        duration: 30,
+        username: req.session.username
+    }
+        
+            await Yolos.create(yoloNew)
 
   
     res.redirect('/yolos')
