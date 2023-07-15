@@ -21,10 +21,18 @@
 
 ## List of Backend Endpoints
 
-| ENDPOINT | METHOD | PURPOSE |
-|----------|--------|---------|
-| /dog | get | list all dogs |
-|/dog/:id | get | list one dog |
+| ENDPOINT         | METHOD | PURPOSE                  |
+|------------------|--------|--------------------------|
+|/yolo-application | get    |home w/ create or log-in  |
+|/user/create      | get    | create user              |
+|/user/login       | get    | log-in user              |
+|/yolos            | get    | user's personal yolo page|
+|/yolos/:id        | get    |individual yolo page      |
+|/addie            | post   |create individual yolo    |
+|/edit:id          | post   |edit yolo/bet             |
+|/delete           | post   |delete yolo early         |
+|/wsryC            | post   |create Wall Stree roulette|
+
 
 ## ERD (ENTITY RELATIONSHIP DIAGRAM)
 
