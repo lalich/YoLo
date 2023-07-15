@@ -2,18 +2,21 @@
 
 - **Project Name:** YoLo Application
 - **Project By:** Mark D. Lalich
+
 - [**LINK TO GITHUB**] https://github.com/lalich/YoLo.git
+
 - [**LINK TO DEPLOYED WEBSITE**] https://yolo-application.onrender.com/
-- **List of Technologies used:** HTML, JS, CSS, Node, Express, EJS, Mongo, Auth
-- [**LINK TO TRELLO**]https://miro.com/app/board/uXjVMFQnZAA=/#tpicker-content
 
-
-Description
+## Description
 
 
     The YoLo application is designed to afford for the speculator to make money on their principal with a given risk/return input on thier chosen investment vehicle. We are starting with Stocks and Options, but future itterations will open access to round the clock futures, commodoties, real estate, currency, and other off exchange products not generally available. This application will require notifications and you are not going to want to miss the push opportunities of new products to speculate on. 
 
     The idea stemmed from many years on chat forums as a professional invesment manager witnessing the countless mistakes made. Watching BILLIONS lost by just not following the speculators rule book of a strategy going in and out of a trade and it not changing.
+
+- **List of Technologies used:** HTML, JS, CSS, Node, Express, EJS, Mongo, Auth, Mongoose, express-session, bcryptjs, morgan, dotenv.
+
+- [**LINK TO TRELLO**]https://miro.com/app/board/uXjVMFQnZAA=/#tpicker-content
 
 
 ## Mock UP of UI
