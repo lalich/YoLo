@@ -47,7 +47,7 @@ router.post('/', async (req, res) => {
 
 router.post('/wsryC', async (req, res) => {
     try{
-        
+
     const tickerSet = ['AAPL', 'GOOGL', 'AMZN', 'META', 'INTC', 'SOFI', 'A', 'GME', 'BB', 'CVX',
                         'XOM', 'T', 'NIO', 'BABA', 'MSFT', 'TSLA', 'NVDA', 'HD', 'PG', 'KO',
                         'COST', 'CRM', 'MCD', 'NFLX', 'F', 'AMD', 'TMUS', 'NKE', 'DIS', 'RTX',
@@ -55,7 +55,7 @@ router.post('/wsryC', async (req, res) => {
 // console.log(tickerSet[7])
 
         function randomT(tickerSet) { 
-                    const randomIndex= Math.floor(Math.random() * tickerSet.length)
+                    const randomIndex= Math.floor(Math.random() * (tickerSet.length -1))
                         return tickerSet[randomIndex]
                         }
                         // console.log(randomT(tickerSet))
@@ -69,9 +69,10 @@ router.post('/wsryC', async (req, res) => {
         duration: 30,
         username: req.session.username
     }
-        
-            await Yolos.create(yoloNew)
+        console.log(yoloNew)
+          const wsRouletteY =  await Yolos.create(yoloNew)
 
+console.log(wsRouletteY)
   
     res.redirect('/yolos')
 
