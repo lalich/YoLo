@@ -7,30 +7,69 @@
     <title>Review da YoLo</title>
     <link rel="icon" type="image/x-icon" href="/YoLo.png">
     <%- include("./partials/files.ejs") %>
+
+    <!-- Add custom CSS -->
+    <style>
+        /* Align the text to the left */
+        body {
+            background-color: rgb(0, 0, 0);
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* Styling for h2 with background image */
+        .ticker-background {
+            display: inline-block;
+            width: 420px; /* Set the width for the ticker image */
+            height: 169px; /* Set the height for the ticker image */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            color: transparent; /* Hide the text, show only the image */
+        }
+
+        /* Footer styling for consistency */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            font-size: smaller;
+            color: aliceblue;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+        }
+    </style>
 </head>
-<body style="background-color: rgba(64, 225, 99, 0.431);">
+<body>
 
-    <h1 style="color: rgb(13, 100, 13)">You spun your luck on that... <%= yolos.ticker %> </h1>
-<br>
-<a href="/yolos"><button>Back to my list o YoLos</button></a>
-<br>
-        <h2> Here are the betting specs you made for: </h2<br> <h2 style="font-size: larger; font-family: 'Courier New', Courier, monospace;
-        text-decoration: underline; font-size: xx-large; color: rgb(15, 43, 156)"> <%= yolos.ticker %> </h2>
+    <h1 style="color: rgb(13, 100, 13)">You spun your luck on that... <%= yolos.ticker %></h1>
+    <br>
+    <a href="/yolos"><button>Back to my list o YoLos</button></a>
+    <br>
 
-        <h3>$$$ Amount: $ <%= yolos.amount %></h3>
+    <h2 style="color: whitesmoke">Here are the betting specs you made for:</h2>
+    
+    <!-- Background image on H2 with the ticker logo -->
+    <h2 class="ticker-background" style="background-image: url('/ticklogos/<%= yolos.ticker %>.png');"></h2>
 
-        <h5>Your plan is to make <%= yolos.profitP %>% over the next <%= yolos.duration %> days with <%= yolos.yolo ? 'Diamond Hands!' :
-        'lil paper ' + yolos.riskP +'% weak hands!' %>
-        </h5>
-<br>
-<br>
-            <a href="/yolos/<%= yolos._id %>/edit"><button>Sniffles... but I need to make change$</button></a>
-            <br>
-            <br>
-            <form method="POST" action="/yolos/<%= yolos._id %>?_method=DELETE">
-                    <input type="submit" value="Save whatever is left or already won please" />
+    <h3 style="color: whitesmoke">$$$ Amount: $ <%= yolos.amount %></h3>
 
-   
+    <h5 style="color: whitesmoke">Your plan is to make <%= yolos.profitP %>% over the next <%= yolos.duration %> days with <%= yolos.yolo ? 'Diamond Hands!' :
+        'lil paper ' + yolos.riskP + '% weak hands!' %></h5>
+
+    <br><br>
+
+    <a href="/yolos/<%= yolos._id %>/edit"><button>Sniffles... but I need to make change$</button></a>
+    <br><br>
+
+    <form method="POST" action="/yolos/<%= yolos._id %>?_method=DELETE">
+        <input type="submit" value="Save whatever is left or already won please" />
+    </form>
+
+    <!-- Disclaimer at the bottom -->
+    <div class="footer">
+        <p>Disclaimer: The WSRY Wheel is for entertainment purposes only. Investments carry risk, and past performance does not guarantee future results. Always play responsibly.</p>
+    </div>
 
 </body>
 </html>

@@ -4,42 +4,168 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Review da YoLo</title>
+    <title>WSRY Wheel</title>
     <link rel="icon" type="image/x-icon" href="/YoLo.png">
     <%- include("./partials/files.ejs") %>
+
+    <!-- Add CSS for Animation and Visual Changes -->
+    <style>
+        /* Define the spinning animation */
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(3600deg); /* Spin multiple times for effect */
+            }
+        }
+
+        /* Wheel animation state */
+        .spinning {
+            animation: spin 4s cubic-bezier(0.42, 0, 0.58, 1) forwards; /* Easing out at the end */
+        }
+
+        /* Visual styling for the WSRY Wheel */
+        .wsry-wheel {
+            background-image: url('/WSRY.webp'); /* Ensure correct path */
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 24.9rem;
+            height: 24.9rem;
+            margin: 0 auto;
+            border: 10px solid green; /* Green border around the black background */
+            border-radius: 50%; /* Make the element circular */
+        }
+
+        /* Hide the result initially */
+        #tickerResult {
+            display: none;
+            font-size: xx-large;
+            color: black; /* Updated to black */
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 80px; /* Added margin to ensure spacing from the footer */
+        }
+
+        /* Styling for the Spin Wheel text */
+        .spin-text {
+            font-size: xx-large;
+            color: black; /* Updated to black */
+        }
+
+        /* Fixed footer styling for the disclaimer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            font-size: smaller;
+            color: aliceblue;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            z-index: 1; /* Ensure the footer stays on top */
+        }
+    </style>
+
 </head>
 
-<body style="background-image: url('/Courage.jpeg'); background-size: cover; background-repeat: no-repeat;
-background-color: crimson;">
+<body style="background-image: url('/Courage.jpeg'); background-size: cover; background-repeat: no-repeat; background-color: crimson;">
             
-<h1 style="font-size: xx-large; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+    <h1 style="font-size: xx-large; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
             text-align: center; color: aliceblue; text-decoration: wavy;">
-            Welcome to Wally Street Roulette YoLos Wheel!</h1>
+            Welcome to the WSRY Wheel!</h1>
 
-    
     <div style="display: flex; justify-content: center;">
-    <a href="/yolos"><button style="background-color: coral;">Back To the $how</button></a>
+        <a href="/yolos"><button style="background-color: coral;">Back To the $how</button></a>
     </div>
     <br>
-    
-    <form style="color: yellow; font-size: larger; " action="/yolos/wsryC" method="POST" >
 
-  
-        How Much $ are you Yoloing? $<input type="number" name="amount" />
+    <form id="wsRouletteForm" style="color: yellow; font-size: larger;" action="/yolos/wsryC" method="POST">
+        <!-- Amount Input -->
+        How Much $ are you Yoloing? $<input type="number" name="amount" id="amount" required />
         <br/><br/>
-        At what point do your hands turn to paper? <input type="number" name="profitP" /> % return you are willing to take?
-        <br/><br/>
-<br><br><br><br><br>
+        <!-- Profit Percentage Input -->
+        At what point do your hands turn to paper? <input type="number" name="profitP" id="profitP" required /> % return you are willing to take?
+        <br/><br/><br/>
 
-        <div style="display: flex; flex-direction: column; justify-content: center; text-align: center; font-size: xx-large;">
-            Spin the WSRoulette Wheel!
-          
-    <br>
-        <button style="margin: 0 auto; background-image: url('/roulette.jpeg'); background-size: contain; background-repeat: no-repeat; width: 24.9rem; height: 14.4rem; " 
-        type="submit"value= 'Spin the WSRoulette Wheel!'></button>
-    </div>         
-   </form>
+        <!-- Hidden input to store the selected ticker -->
+        <input type="hidden" name="selectedTicker" id="selectedTicker" />
 
+        <div style="display: flex; flex-direction: column; justify-content: center; text-align: center;" class="spin-text">
+            Spin the WSRY Wheel!
+            <br>
 
+            <!-- Roulette Button (with spinning functionality) -->
+            <div id="spinButton" class="wsry-wheel"></div>
+        </div>         
+    </form>
 
-</body></html>
+    <!-- Ticker result section -->
+    <div id="tickerResult">Your Ticker is: <span id="ticker"></span></div>
+
+    <!-- Disclaimer at the bottom -->
+    <div class="footer">
+        <p>Disclaimer: The WSRY Wheel is for entertainment purposes only. Investments carry risk, and past performance does not guarantee future results. Always play responsibly.</p>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tickerSet = ['AAPL', 'BRK', 'GOOGL', 'AMZN', 'META', 'INTC', 'CLOV', 'KOSS', 'GME', 'BB', 'CVX', 'XOM', 'JD', 'NIO', 'BABA', 'MSFT', 'TSLA', 'NVDA', 'HD', 'PG', 'KO', 'COST', 'MSTR', 'MCD', 'NFLX', 'GM', 'AMD', 'TMUS', 'NKE', 'DIS', 'RTX', 'BA', 'CAT', 'UNP', 'TM', 'TSM', 'SPY', 'QQQ', 'PLTR'];
+
+            const spinButton = document.getElementById('spinButton');
+            const tickerResult = document.getElementById('tickerResult');
+            const tickerDisplay = document.getElementById('ticker');
+            const selectedTickerInput = document.getElementById('selectedTicker');  // Hidden input
+            const form = document.getElementById('wsRouletteForm');
+            const amountInput = document.getElementById('amount');
+            const profitPInput = document.getElementById('profitP');
+
+            spinButton.addEventListener('click', function(e) {
+                e.preventDefault();  // Prevent form from submitting immediately
+
+                // Check if form inputs are valid
+                const amountValue = amountInput.value;
+                const profitPValue = profitPInput.value;
+
+                if (!amountValue || !profitPValue) {
+                    alert("Please fill in both the amount and profit percentage before spinning the wheel.");
+                    return;
+                }
+
+                // Add spinning class
+                spinButton.classList.add('spinning');
+
+                // Remove any previous result
+                tickerResult.style.display = 'none';
+
+                // Spin for 4 seconds, then show result and submit form
+                setTimeout(() => {
+                    spinButton.classList.remove('spinning');
+
+                    // Select a random ticker
+                    const randomTicker = tickerSet[Math.floor(Math.random() * tickerSet.length)];
+
+                    // Display the result
+                    tickerDisplay.textContent = randomTicker;
+                    tickerResult.style.display = 'block';
+
+                    // Set the hidden input value with the selected ticker
+                    selectedTickerInput.value = randomTicker;
+
+                    // Log values to ensure correctness
+                    console.log("Submitting form with values:");
+                    console.log("Amount:", amountValue);
+                    console.log("Profit Percentage:", profitPValue);
+                    console.log("Selected Ticker:", selectedTickerInput.value);
+
+                    // Submit the form after the spin is complete
+                    form.submit();
+
+                }, 4000); // Spin for 4 seconds
+            });
+        });
+    </script>
+
+</body>
+</html>

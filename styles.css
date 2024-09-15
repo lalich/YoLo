@@ -5,3 +5,36 @@ background-repeat: no-repeat;
 background-size: cover;
 
 }
+
+/* Base styling for the dynamic wheel */
+#wheel {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    border: 5px solid green;
+    background-color: black;
+    overflow: hidden;
+}
+
+#wheel .segment {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 50%;
+    left: 50%;
+    transform-origin: 0% 100%;
+    clip-path: polygon(0% 100%, 100% 100%, 50% 0%);
+    background-color: crimson;
+}
+
+.wheel-logo {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-size: contain;
+    background-repeat: no-repeat;
+}

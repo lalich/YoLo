@@ -46,43 +46,35 @@ router.post('/', async (req, res) => {
 })
 
 router.post('/wsryC', async (req, res) => {
-    try{
+    try {
+        // Use the ticker passed from the client (hidden input field)
+        let yoloNew = {
+            ticker: req.body.selectedTicker,  // Use the ticker from the client
+            amount: req.body.amount,
+            yolo: true,
+            riskP: 100,
+            profitP: req.body.profitP,
+            duration: 30,
+            username: req.session.username
+        }
 
-    const tickerSet = ['AAPL', 'GOOGL', 'AMZN', 'META', 'INTC', 'SOFI', 'A', 'GME', 'BB', 'CVX',
-                        'XOM', 'T', 'NIO', 'BABA', 'MSFT', 'TSLA', 'NVDA', 'HD', 'PG', 'KO',
-                        'COST', 'CRM', 'MCD', 'NFLX', 'F', 'AMD', 'TMUS', 'NKE', 'DIS', 'RTX',
-                        'BA', 'CAT', 'UNP', 'TM', 'PEP', 'SPY', 'QQQ', 'PLTR']
-// console.log(tickerSet[7])
+        // Log the yoloNew object to ensure correctness
+        console.log("Creating new YoLo with the following data:", yoloNew);
 
-        function randomT(tickerSet) { 
-                    const randomIndex= Math.floor(Math.random() * (tickerSet.length -1))
-                        return tickerSet[randomIndex]
-                        }
-                        // console.log(randomT(tickerSet))
+        // Create the new YoLo in the database
+        const wsRouletteY = await Yolos.create(yoloNew);
 
-    let yoloNew = {
-        ticker: randomT(tickerSet),
-        amount: req.body.amount,
-        yolo: true,
-        riskP: 100,
-        profitP: req.body.profitP,
-        duration: 30,
-        username: req.session.username
+        // Log the created YoLo for debugging
+        console.log("YoLo created:", wsRouletteY);
+
+        // Redirect back to the main page
+        res.redirect('/yolos');
+
+    } catch (error) {
+        console.log("Error creating YoLo:", error);
+        res.redirect('/');
     }
-        console.log(yoloNew)
-          const wsRouletteY =  await Yolos.create(yoloNew)
-
-console.log(wsRouletteY)
-  
-    res.redirect('/yolos')
-
-           } catch (error) {
-                        console.log(error)
-                        res.redirect('/') 
-                    }
-})
-
-
+});
 
 router.get('/:id', async (req, res) => {
 const disYolo = await Yolos.findById(req.params.id)
