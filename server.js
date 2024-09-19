@@ -11,6 +11,7 @@ const mongoose = require('mongoose')
 const app = express();
 const YoloRouter = require('./controllers/yolo')
 const UserRouter = require('./controllers/user')
+const apiKey = process.env.POLYAPI
 
 // middleware
 app.use(morgan('tiny')); // logging
