@@ -8,26 +8,22 @@
     <link rel="icon" type="image/x-icon" href="/YoLo.png">
     <%- include("./partials/files.ejs") %>
 
-    <!-- Add custom CSS -->
     <style>
-        /* Align the text to the left */
         body {
             background-color: rgb(0, 0, 0);
             font-family: 'Courier New', Courier, monospace;
         }
 
-        /* Styling for h2 with background image */
         .ticker-background {
             display: inline-block;
-            width: 420px; /* Set the width for the ticker image */
-            height: 169px; /* Set the height for the ticker image */
+            width: 420px;
+            height: 169px;
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            color: transparent; /* Hide the text, show only the image */
+            color: transparent;
         }
 
-        /* Footer styling for consistency */
         .footer {
             position: fixed;
             bottom: 0;
@@ -39,7 +35,6 @@
             padding: 10px;
         }
 
-        /* Modal styling */
         .modal {
             display: none;
             position: fixed;
@@ -81,13 +76,11 @@
 
     <h2 style="color: whitesmoke">Here are the betting specs you made for:</h2>
     
-    <!-- Background image on H2 with the ticker logo -->
     <h2 class="ticker-background" style="background-image: url('/ticklogos/<%= yolos.ticker %>.png');"></h2>
 
     <h3 style="color: whitesmoke">$$$ Amount: $ <%= yolos.amount %></h3>
 
-    <h5 style="color: whitesmoke">Your plan is to make <%= yolos.profitP %>% over the next <%= yolos.duration %> days with <%= yolos.yolo ? 'Diamond Hands!' :
-        'lil paper ' + yolos.riskP + '% weak hands!' %></h5>
+    <h5 style="color: whitesmoke">Your plan is to make <%= yolos.profitP %>% over the next <%= yolos.duration %> days with <%= yolos.yolo ? 'Diamond Hands!' : 'lil paper ' + yolos.riskP + '% weak hands!' %></h5>
 
     <br><br>
 
@@ -98,67 +91,92 @@
         <input type="submit" value="Save whatever is left or already won please" />
     </form>
 
-    <!-- Disclaimer at the bottom -->
     <div class="footer">
         <p>Disclaimer: The WSRY Wheel is for entertainment purposes only. Investments carry risk, and past performance does not guarantee future results. Always play responsibly.</p>
     </div>
 
+    <!-- Modal structure for ticker data -->
 <!-- Modal structure for ticker data -->
 <div id="tickerModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
-        <!-- Container for logo and name -->
-        <div style="display: flex; align-items: center;">
-            <img id="companyLogo" src="" alt="Company Logo" style="width: 50px; height: 50px; margin-right: 10px;">
-            <h2 id="companyName"></h2>
-        </div>
-        <p id="marketCap"></p>
-        <p id="description"></p>
+        <!-- Content from API -->
+        <h2 id="companyName"></h2>
+        <p id="closingPrice"></p> <!-- Closing Price and Percentage Change -->
+        <p><a href="#" id="companyUrl" target="_blank"></a></p> <!-- Link for the company URL -->
+        <p id="description"></p> <!-- Company description -->
     </div>
 </div>
 
 
     <!-- Add your scripts at the bottom of the body -->
+    
     <script>
-        
-        const ticker = "<%= yolos.ticker %>"; // You can pass your ticker dynamically here
+        const ticker = "<%= yolos.ticker %>"; // Pass your ticker dynamically here
 
-       // Event listener for clicking the logo
-document.querySelector('.ticker-background').addEventListener('click', function() {
-    // Show modal with ticker data
-    const modal = document.getElementById('tickerModal');
-    modal.style.display = 'block';
+        // Declare modal once
+        const modal = document.getElementById('tickerModal');
 
-    // Fetch the data from the Polygon API
-    fetch(`https://api.polygon.io/v1/meta/symbols/${ticker}/company?apiKey=HMKHCCgqWLvu_C9a8aiprQNGVLIgZxvn`)
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
+        // Event listener for clicking the logo
+        document.querySelector('.ticker-background').addEventListener('click', function() {
+            // Show modal with ticker data
+            modal.style.display = 'block';
 
-        // Populate modal with data including the logo
-        document.getElementById('companyName').innerText = data.name;
-        document.getElementById('marketCap').innerText = `Market Cap: ${data.marketcap}`;
-        document.getElementById('description').innerText = data.description;
+            // Define both API calls
+            const companyInfoUrl = `https://api.polygon.io/v3/reference/tickers/${ticker}?apiKey=HMKHCCgqWLvu_C9a8aiprQNGVLIgZxvn`;
+            const snapshotUrl = `https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?tickers=${ticker}&apiKey=HMKHCCgqWLvu_C9a8aiprQNGVLIgZxvn`;
 
-        // Set the company logo if available, otherwise show a default image
-        document.getElementById('companyLogo').src = data.logo ? data.logo : '/default_logo.png';
-    })
-    .catch(error => console.error('Error fetching data:', error));
-});
+            // Fetch both data sets using Promise.all()
+            Promise.all([
+                fetch(companyInfoUrl),
+                fetch(snapshotUrl)
+            ])
+            .then(responses => Promise.all(responses.map(response => response.json())))  // Parse both responses as JSON
+            .then(data => {
+                const companyData = data[0];  // First API response (Company Info)
+                const snapshotData = data[1]; // Second API response (Snapshot Info)
 
-// Close modal when user clicks on the close button or outside the modal
-const modal = document.getElementById('tickerModal');
-document.querySelector('.close').addEventListener('click', function() {
-    modal.style.display = 'none';
-});
+                console.log(companyData);  // Log company data
+                console.log(snapshotData); // Log snapshot data
 
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = 'none';
-    }
-};
+                // Populate modal with company data
+                document.getElementById('companyName').innerText = companyData.results.name;
 
+                // Closing price and percentage change from snapshot data
+                if (snapshotData.tickers && snapshotData.tickers.length > 0) {
+                    const stockInfo = snapshotData.tickers[0];
+                    const closingPrice = stockInfo.day.c;  // Closing price from the "day" object
+                    const percentChange = stockInfo.todaysChangePerc; // Percentage change
+                    document.getElementById('closingPrice').innerText = `Closing Price: $${closingPrice.toFixed(2)} (${percentChange.toFixed(2)}%)`;
+                }
+
+                // Set company URL and anchor text using homepage_url, after the closing price
+                const companyUrl = document.getElementById('companyUrl');
+                companyUrl.href = companyData.results.homepage_url ? companyData.results.homepage_url : '#';
+                companyUrl.innerText = companyData.results.homepage_url ? companyData.results.homepage_url : 'No website available';
+
+                // Description from company data
+                document.getElementById('description').innerText = companyData.results.description;
+
+            })
+            .catch(error => console.error('Error fetching data:', error));
+        });
+
+        // Event listener for closing modal when user clicks on the close button
+        document.querySelector('.close').addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        // Close modal if user clicks outside of it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        };
     </script>
+
+
+
 
 </body>
 </html>
