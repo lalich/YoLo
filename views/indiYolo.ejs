@@ -76,7 +76,14 @@
 
     <h2 style="color: whitesmoke">Here are the betting specs you made for:</h2>
     
-    <h2 class="ticker-background" style="background-image: url('/ticklogos/<%= yolos.ticker %>.png');"></h2>
+ <!-- Add this text above the ticker logo, styled to match the disclaimer text size -->
+<h2 style="color: whitesmoke; font-size: smaller; margin-bottom: 10px;">
+    Click your YoLo logo for more information
+</h2>
+
+<!-- Background image on H2 with the ticker logo -->
+<h2 class="ticker-background" style="background-image: url('/ticklogos/<%= yolos.ticker %>.png');"></h2>
+
 
     <h3 style="color: whitesmoke">$$$ Amount: $ <%= yolos.amount %></h3>
 
