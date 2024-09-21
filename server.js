@@ -33,6 +33,7 @@ app.use(session({
 app.use('/yolos', YoloRouter)
 app.use('/user', UserRouter)
 
+
 // Routes
 
 app.get('/', (req, res) => {
