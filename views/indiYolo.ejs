@@ -85,7 +85,8 @@
 <h2 class="ticker-background" style="background-image: url('/ticklogos/<%= yolos.ticker %>.png');"></h2>
 
 
-    <h3 style="color: whitesmoke">$$$ Amount: $ <%= yolos.amount %></h3>
+<h3 style="color: whitesmoke">$$$ Amount: $<%= Number(yolos.amount || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %></h3>
+
 
     <h5 style="color: whitesmoke">Your plan is to make <%= yolos.profitP %>% over the next <%= yolos.duration %> days with <%= yolos.yolo ? 'Diamond Hands!' : 'lil paper ' + yolos.riskP + '% weak hands!' %></h5>
 

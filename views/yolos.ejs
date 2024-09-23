@@ -2,54 +2,123 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Open YoLo Log</title>
     <link rel="icon" type="image/x-icon" href="/YoLo.png">
     <%- include("./partials/files.ejs") %>
+    <style>
+        /* Add CSS for layout */
+        body {
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            flex: 1;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+        .left-side {
+            flex: 1; /* Let it take the remaining space */
+            padding: 20px;
+        }
+        .right-side {
+            flex: none; /* Do not grow or shrink */
+            padding: 20px;
+            background-color: #d4edda; /* Match background color of alert-success */
+            max-width: 250px; /* Limit the maximum width */
+            margin-left: auto; /* Push it to the right */
+        }
+        /* Flash message styling */
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+        /* Additional styling as needed */
+    </style>
 </head>
-<body style=" background-image: url('/yoloCounty.webp'); background-repeat: no-repeat; background-position: center
-;background-color: rgba(31, 146, 66, 0.431);">
-    <h1 style="text-decoration: underline;">Welcome to the <%= user%> Yolo Application</h1>
+<body style="background-image: url('/yoloCounty.webp'); background-repeat: no-repeat; background-position: center; background-color: rgba(31, 146, 66, 0.431);">
+    <!-- Header -->
+    <h1 style="text-decoration: underline; text-align: center;">Welcome to the <%= user %> YoLo Application</h1>
 
-<div>
-<container style="align-content: right; margin-right: 0;">
-<%= user%> YoLo Balance
+    <!-- Flash Messages -->
+    <% if (success && success.length > 0) { %>
+        <div class="alert alert-success">
+            <%= success %>
+        </div>
+    <% } %>
+    <% if (error && error.length > 0) { %>
+        <div class="alert alert-danger">
+            <%= error %>
+        </div>
+    <% } %>
 
-</container>
-</div>
-
-    <nav>
-        <a href="/yolos/addie">Manual YoLo Addie Time!<br>
-            <input type="image" src="/stonkRocket.jpeg" alt="yolos" width="100" height="123"/></a> 
-        <br>
-        
-    </nav>
-<h3>These are your YoLo attempts... so far!</h3>
-    
-<ul>
-    <% yolos.forEach(yolo => { %>
-            <li>
-                <a href="yolos/<%=yolo._id %>" >
-                    <%=yolo.ticker %>
+    <div class="container">
+        <!-- Left Side: YoLos and Actions -->
+        <div class="left-side">
+            <nav>
+                <a href="/yolos/addie">Manual YoLo Addie Time!<br>
+                    <img src="/stonkRocket.jpeg" alt="yolos" width="100" height="123" />
                 </a>
-            </li>
-        <% }) %>
-    </ul>
-    <br>
+                <br>
+            </nav>
+            <h3>These are your active YoLos!</h3>
+            <ul>
+                <% yolos.forEach(yolo => { %>
+                    <li>
+                        <a href="yolos/<%= yolo._id %>">
+                            <%= yolo.ticker %>:
+                             $<%= (yolo.amount || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
+                        </a>
+                    </li>
+                <% }) %>
+            </ul>
+            <br>
+            <div>
+                <a href="/yolos/wsry">I'd like to play WSRouletteY please!</a>
+                <br>
+                <img src="/roulette.jpeg" alt="wsry" width="369" height="223" />
+            </div>
+            <br><br>
+            <a href="/user/logout"><button>I'm Out of Here</button></a>
+        </div>
 
-    <div style="display: flex; justify-content: left;">
-    <a href="/yolos/wsry">I'd like to play WSRouletteY please!
-<br>
-            <input type="image" src="/roulette.jpeg" alt="wsry" width="369" height="223"/>
-                </div>
-    </a>
- <br><br>
-        <a href="/user/logout"><button>I'm Out of Here</button></a>
-    </body>
+        <!-- Right Side: Wallet -->
+        <div class="right-side">
+            <h3><%= user %> YoLo Wallet</h3>
+            <p><strong>Available Funds:</strong> $<%= (balance || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %></p>
 
+
+            <!-- Add Funds Form -->
+            <form id="add-funds-form" action="/user/add-funds" method="POST">
+                <label for="amount">Add Funds:</label><br/>
+                <input type="number" id="amount" name="amount" min="1" required />
+                <button type="submit">Add Funds</button>
+            </form>
+
+    <!-- Cashout Form -->
+    <form id="cashout-form" action="/user/cashout" method="POST" style="margin-top: 20px;">
+        <label for="cashout-amount">Cashout Amount:</label>
+        <input type="number" id="cashout-amount" name="amount" min="1" required />
+        <button type="submit">Cashout</button>
+    </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
     <div style="position: fixed; bottom: 0; width: 100%; text-align: center; font-size: smaller; color: aliceblue; background-color: rgba(0, 0, 0, 0.7); padding: 10px;">
         <p>Disclaimer: The WSRY Wheel is for entertainment purposes only. Investments carry risk, and past performance does not guarantee future results. Always play responsibly.</p>
     </div>
-    
-    </html>
+</body>
+</html>
