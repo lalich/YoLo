@@ -107,65 +107,57 @@ router.post('/', async (req, res) => {
 
 // Create YoLo via WSRY Wheel
 router.post('/wsryC', async (req, res) => {
-    try {
-        // Parse and validate the amount
-        const yoloAmount = parseFloat(req.body.amount);
-        if (isNaN(yoloAmount) || yoloAmount <= 0) {
-            req.flash('error', 'Invalid amount entered.');
-            res.redirect('/yolos/wsry');
-            return;
-        }
+  try {
+      // Extract data from the request body
+      const { amount, profitP, selectedTicker } = req.body;
+      const username = req.session.username;
 
-        // Retrieve the user from the database
-        const user = await User.findById(req.session.userId);
-        if (!user) {
-            req.flash('error', 'User not found. Please log in again.');
-            res.redirect('/user/login');
-            return;
-        }
+      // Validate the data
+      if (!amount || !profitP || !selectedTicker || !username) {
+          return res.status(400).json({ error: 'Invalid data' });
+      }
 
-        // Check if the user has sufficient balance
-        if (user.balance < yoloAmount) {
-            req.flash('error', 'Insufficient funds. Please add funds to your wallet.');
-            res.redirect('/yolos');
-            return;
-        }
+      // Ensure amount and profitP are numbers
+      const amountValue = parseFloat(amount);
+      const profitPValue = parseFloat(profitP);
 
-        // Deduct the amount from the user's balance
-        user.balance -= yoloAmount;
-        await user.save();
+      if (isNaN(amountValue) || isNaN(profitPValue) || amountValue <= 0 || profitPValue <= 0) {
+          return res.status(400).json({ error: 'Invalid amount or profit percentage' });
+      }
 
-        // Update the balance in the session
-        req.session.balance = user.balance;
+      // Deduct the amount from the user's balance
+      const user = await User.findById(req.session.userId);
+      if (!user) {
+          return res.status(401).json({ error: 'User not found' });
+      }
 
-        // Prepare the YoLo data
-        let yoloNew = {
-            ticker: req.body.selectedTicker, // Use the ticker from the client
-            amount: yoloAmount,
-            yolo: true,
-            riskP: 100,
-            profitP: req.body.profitP,
-            duration: 30,
-            username: req.session.username,
-        };
+      if (user.balance < amountValue) {
+          return res.status(400).json({ error: 'Insufficient balance' });
+      }
 
-        // Log the yoloNew object to ensure correctness
-        console.log('Creating new YoLo with the following data:', yoloNew);
+      user.balance -= amountValue;
+      await user.save();
 
-        // Create the new YoLo in the database
-        const wsRouletteY = await Yolo.create(yoloNew);
+      // Update the balance in the session
+      req.session.balance = user.balance;
 
-        // Log the created YoLo for debugging
-        console.log('YoLo created:', wsRouletteY);
+      // Create the new YoLo
+      const newYolo = await Yolo.create({
+          ticker: selectedTicker,
+          amount: amountValue,
+          profitP: profitPValue,
+          yolo: true, // Assuming this is a WSRY YoLo
+          username: username,
+          // Add any other required fields
+      });
 
-        req.flash('success', 'YoLo created successfully via WSRY Wheel!');
-        // Redirect back to the main page
-        res.redirect('/yolos');
-    } catch (error) {
-        console.log('Error creating YoLo:', error);
-        req.flash('error', 'Error creating YoLo. Please try again.');
-        res.redirect('/yolos/wsry');
-    }
+      // Send a success response
+      res.json({ success: true });
+
+  } catch (error) {
+      console.error('Error creating YoLo:', error);
+      res.status(500).json({ error: 'Server error' });
+  }
 });
 
 // Display Individual YoLo

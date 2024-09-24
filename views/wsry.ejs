@@ -2,153 +2,156 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WSRY Wheel</title>
     <link rel="icon" type="image/x-icon" href="/YoLo.png">
     <%- include("./partials/files.ejs") %>
 
     <!-- Add CSS for Animation and Visual Changes -->
     <style>
+        /* Wheel animation state */
+        .wsry-wheel {
+            background-color: black;
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 500px; /* Adjust size as needed */
+            height: 500px;
+            margin: 0 auto;
+            position: relative;
+            border: 10px solid rgb(83, 7, 83);
+            border-radius: 50%;
+            overflow: hidden;
+        }
 
+        /* Segment styling */
+        .segment {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            top: 0%;
+            left: 50%;
+            transform-origin: 0% 50%;
+            overflow: hidden;
+        }
 
-/* Wheel animation state */
-.wsry-wheel.spinning {
-    animation: spin 4s cubic-bezier(0.42, 0, 0.58, 1) forwards; /* Easing out at the end */
-}
+        /* Logo styling */
+        .wheel-logo {
+            position: absolute;
+            width: 150%;
+            height: 125%;
+            top: -50%;
+            left: -100%;
+            background-size: 100%; /* Adjusted to prevent overlap */
+            background-repeat: no-repeat;
+            background-position: left;
+        }
 
-/* Visual styling for the WSRY Wheel */
-/* Wheel styling */
-.wsry-wheel {
-    background-color: black;
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 500px; /* Adjust size as needed */
-    height: 500px;
-    margin: 0 auto;
-    position: relative;
-    border: 10px solid rgb(83, 7, 83);
-    border-radius: 50%;
-    overflow: hidden;
-}
+        /* Central logo styling */
+        .central-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250px; /* Adjust size as needed */
+            height: 250px;
+            transform: translate(-50%, -50%);
+            z-index: 2; /* Ensure it appears above the wheel */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
 
-/* Segment styling */
-.segment {
-    position: absolute;
-    width: 50%;
-    height: 100%;
-    top: 0%;
-    left: 50%;
-    transform-origin: 0% 50%;
-    overflow: hidden;
-}
+        /* Pop-up styling */
+        #resultPopup {
+            display: none; /* Hidden by default */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            padding: 20px;
+            background-color: #fff;
+            border: 2px solid #000;
+            z-index: 3; /* Above all other elements */
+            text-align: center;
+            border-radius: 10px;
+        }
 
-/* Logo styling */
-.wheel-logo {
-    position: absolute;
-    width: 150%;
-    height: 125%;
-    top: -50%;
-    left: -100%;
-    background-size: 100%; /* Adjusted to prevent overlap */
-    background-repeat: no-repeat;
-    background-position: left;
-}
-.central-logo {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 250px; /* Adjust size as needed */
-    height: 250px;
-    transform: translate(-50%, -50%);
-    z-index: 2; /* Ensure it appears above the wheel */
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-}
+        #resultPopup img {
+            width: 100px;
+            height: 100px;
+        }
 
+        #resultPopup h2 {
+            margin: 10px 0;
+            font-size: 24px;
+        }
 
+        /* Black bar header styling */
+        .header {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 7px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
 
-/* Black bar header styling */
-.header {
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 7px;
-    text-align: center;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 10;
-}
+        .header h1 {
+            font-size: xx-large;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            color: aliceblue;
+            text-decoration: wavy;
+            margin: 0;
+        }
 
-.header h1 {
-    font-size: xx-large;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    color: aliceblue;
-    text-decoration: wavy;
-    margin: 0;
-}
+        /* Space for content below the header */
+        .content {
+            padding-top: 69px;
+        }
 
-/* Space for content below the header */
-.content {
-    padding-top: 69px;
-}
+        /* Styling for the Spin Wheel text */
+        .spin-text {
+            font-size: xx-large;
+            color: rgb(187, 133, 11);
+            text-align: center;
+        }
 
-/* Hide the result initially */
-#tickerResult {
-    display: none;
-    font-size: xx-large;
-    color: black;
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 80px;
-}
-
-/* Styling for the Spin Wheel text */
-.spin-text {
-    font-size: xx-large;
-    color: rgb(187, 133, 11);
-}
-
-/* Fixed footer styling for the disclaimer */
-.footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    font-size: smaller;
-    color: aliceblue;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 10px;
-    z-index: 1;
-}
-
+        /* Fixed footer styling for the disclaimer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            font-size: smaller;
+            color: aliceblue;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            z-index: 1;
+        }
     </style>
-
 </head>
-    
+
 <body style="background-image: url('/Courage.jpeg'); background-size: cover; background-repeat: no-repeat; background-color: crimson;">
-       <!-- Black bar header with the H1 -->
-       <div class="header">
+    <!-- Black bar header with the H1 -->
+    <div class="header">
         <h1>Welcome to the WSRY Wheel!</h1>
-    </div>       
+    </div>
 
     <!-- Main content with padding to ensure space below the header -->
     <div class="content">
-        <form id="wsRouletteForm" style="color: rgb(235, 253, 38); font-size: x-large; text-align: right;" action="/yolos/wsryC" method="POST">
+        <form id="wsRouletteForm" style="color: rgb(235, 253, 38); font-size: x-large; text-align: right;">
             <!-- Amount Input -->
             How Much $ are you YoLoing? $<input type="number" name="amount" id="amount" required />
             <br/>
             <!-- Profit Percentage Input -->
-            When do your hands turn to paper? <input type="number" name="profitP" id="profitP" required /> 
+            When do your hands turn to paper? <input type="number" name="profitP" id="profitP" required />
             <br/> **This is your profit percentage**
             <br/>
-            
-            
-            <br/>
+
             <!-- Hidden input to store the selected ticker -->
             <input type="hidden" name="selectedTicker" id="selectedTicker" />
 
-            <div class="spin-text" style="text-align: center;">
+            <div class="spin-text">
                 Spin the WSRY Wheel!
                 <br>
                 <!-- Wheel Container -->
@@ -157,14 +160,19 @@
                     <div id="spinButton" class="wsry-wheel"></div>
                     <!-- Cycling Central Logo -->
                     <div id="centralLogo" class="central-logo"></div>
+                    <!-- Result Pop-up -->
+                    <div id="resultPopup">
+                        <h2>Your Ticker is:</h2>
+                        <img id="resultLogo" src="" alt="Ticker Logo" />
+                        <h2 id="resultTicker"></h2>
+                    </div>
                 </div>
-            </div>    
+            </div>
         </form>
-        <div style="display: flex; justify-content: right;">
+
+        <div style="display: flex; justify-content: right; margin-top: 20px;">
             <a href="/yolos"><button style="background-color: coral;">Back To the $how</button></a>
         </div>
-        <!-- Ticker result section -->
-        <div id="tickerResult">Your Ticker is: <span id="ticker"></span></div>
     </div>
 
     <!-- Disclaimer at the bottom -->
@@ -174,152 +182,186 @@
 
     <!-- JavaScript -->
     <script>
- document.addEventListener('DOMContentLoaded', function () {
-    const tickerSet = [
-        'AAPL', 'BRK.B', 'GOOGL', 'AMZN', 'META', 'INTC', 'CLOV', 'KOSS',
-        'GME', 'BB', 'CVX', 'XOM', 'JD', 'NIO', 'BABA', 'MSFT', 'TSLA',
-        'NVDA', 'HD', 'PG', 'KO', 'COST', 'MSTR', 'MCD', 'NFLX', 'GM',
-        'AMD', 'TMUS', 'NKE', 'DIS', 'RTX', 'BA', 'CAT', 'UNP', 'TM',
-        'TSM', 'SPY', 'QQQ', 'PLTR'
-    ];
+        document.addEventListener('DOMContentLoaded', function () {
+            const tickerSet = [
+                'AAPL', 'BRK.B', 'GOOGL', 'AMZN', 'META', 'INTC', 'CLOV', 'KOSS',
+                'GME', 'BB', 'CVX', 'XOM', 'JD', 'NIO', 'BABA', 'MSFT', 'TSLA',
+                'NVDA', 'HD', 'PG', 'KO', 'COST', 'MSTR', 'MCD', 'NFLX', 'GM',
+                'AMD', 'TMUS', 'NKE', 'DIS', 'RTX', 'BA', 'CAT', 'UNP', 'TM',
+                'TSM', 'SPY', 'QQQ', 'PLTR'
+            ];
 
-    const wheel = document.getElementById('spinButton');
-    const centralLogo = document.getElementById('centralLogo');
-    const tickerResult = document.getElementById('tickerResult');
-    const tickerDisplay = document.getElementById('ticker');
-    const selectedTickerInput = document.getElementById('selectedTicker');
-    const form = document.getElementById('wsRouletteForm');
-    const amountInput = document.getElementById('amount');
-    const profitPInput = document.getElementById('profitP');
+            const wheel = document.getElementById('spinButton');
+            const centralLogo = document.getElementById('centralLogo');
+            const resultPopup = document.getElementById('resultPopup');
+            const resultTicker = document.getElementById('resultTicker');
+            const resultLogo = document.getElementById('resultLogo');
+            const selectedTickerInput = document.getElementById('selectedTicker');
+            const form = document.getElementById('wsRouletteForm');
+            const amountInput = document.getElementById('amount');
+            const profitPInput = document.getElementById('profitP');
 
-    // Arrays to store segments and logos
-    const segments = [];
-    const logos = [];
+            // Arrays to store segments and logos
+            const segments = [];
+            const logos = [];
 
-    // Remove any existing segments from the wheel
-    while (wheel.firstChild) {
-        wheel.removeChild(wheel.firstChild);
-    }
-
-    // Number of segments and angle per segment
-    const numSegments = tickerSet.length;
-    const segmentAngle = 360 / numSegments;
-
-    // Create segments with logos
-    tickerSet.forEach((ticker, index) => {
-        const segment = document.createElement('div');
-        segment.classList.add('segment');
-
-        const rotation = index * segmentAngle;
-        segment.style.transform = `rotate(${rotation}deg)`;
-        segment.style.transformOrigin = '0% 50%';
-
-        const logo = document.createElement('div');
-        logo.classList.add('wheel-logo');
-        logo.style.backgroundImage = `url('/ticklogos/${ticker}.png')`;
-
-        // Rotate the logo back to stay upright
-        logo.style.transform = `rotate(${-rotation}deg)`;
-
-        segment.appendChild(logo);
-        wheel.appendChild(segment);
-
-        // Store references for later use
-        segments.push(segment);
-        logos.push(logo);
-    });
-
-    // Variables for wheel rotation
-    let currentRotation = 0;
-    let isSpinning = false;
-    const slowSpinSpeed = 0.2; // Adjust for desired slow spin speed
-
-    // Function to rotate the wheel slowly
-    function slowSpin() {
-        if (!isSpinning) {
-            currentRotation = (currentRotation + slowSpinSpeed) % 360;
-            wheel.style.transform = `rotate(${currentRotation}deg)`;
-        }
-        requestAnimationFrame(slowSpin);
-    }
-
-    // Start the slow spin
-    requestAnimationFrame(slowSpin);
-
-    // Function to cycle central logo
-    let centralLogoIndex = 0;
-    function cycleCentralLogo() {
-        centralLogoIndex = Math.floor(Math.random() * tickerSet.length);
-        const ticker = tickerSet[centralLogoIndex];
-        centralLogo.style.backgroundImage = `url('/ticklogos/${ticker}.png')`;
-
-        // Set a random interval between 1 to 3 seconds
-        const interval = Math.random() * 3000 + 741;
-        setTimeout(cycleCentralLogo, interval);
-    }
-
-    // Start cycling the central logo
-    cycleCentralLogo();
-
-    // Spin functionality and form submission
-    wheel.addEventListener('click', function (e) {
-        e.preventDefault();
-
-        // Validate form inputs
-        const amountValue = amountInput.value;
-        const profitPValue = profitPInput.value;
-
-        if (!amountValue || !profitPValue) {
-            alert("Please fill in both the amount and profit percentage before spinning the wheel.");
-            return;
-        }
-
-        isSpinning = true;
-
-        // Calculate total rotation for the fast spin
-        const spinRotation = 3600 + Math.random() * 360; // Randomize the final position
-        const spinDuration = 4000; // Duration in milliseconds
-        const startRotation = currentRotation;
-        const endRotation = currentRotation + spinRotation;
-        const startTime = performance.now();
-
-        function animateSpin(timestamp) {
-            const elapsed = timestamp - startTime;
-            if (elapsed < spinDuration) {
-                const progress = elapsed / spinDuration;
-                const easeOutProgress = 1 - Math.pow(1 - progress, 3);
-                const currentSpinRotation = startRotation + (endRotation - startRotation) * easeOutProgress;
-                wheel.style.transform = `rotate(${currentSpinRotation}deg)`;
-                requestAnimationFrame(animateSpin);
-            } else {
-                // Ensure final rotation is set
-                currentRotation = endRotation % 360;
-                wheel.style.transform = `rotate(${currentRotation}deg)`;
-                isSpinning = false;
-
-                // Determine the selected ticker based on final rotation
-                const normalizedRotation = (360 - (currentRotation % 360)) % 360;
-                const selectedIndex = Math.floor(normalizedRotation / segmentAngle) % numSegments;
-                const selectedTicker = tickerSet[selectedIndex];
-
-                // Display the result
-                tickerDisplay.textContent = selectedTicker;
-                tickerResult.style.display = 'block';
-
-                // Set the hidden input value with the selected ticker
-                selectedTickerInput.value = selectedTicker;
-
-                // Submit the form after a brief delay
-                setTimeout(() => {
-                    form.submit();
-                }, 1000); // Adjust delay as needed
+            // Remove any existing segments from the wheel
+            while (wheel.firstChild) {
+                wheel.removeChild(wheel.firstChild);
             }
-        }
 
-        requestAnimationFrame(animateSpin);
+            // Number of segments and angle per segment
+            const numSegments = tickerSet.length;
+            const segmentAngle = 360 / numSegments;
+
+            // Create segments with logos
+            tickerSet.forEach((ticker, index) => {
+                const segment = document.createElement('div');
+                segment.classList.add('segment');
+
+                const rotation = index * segmentAngle;
+                segment.style.transform = `rotate(${rotation}deg)`;
+                segment.style.transformOrigin = '0% 50%';
+
+                const logo = document.createElement('div');
+                logo.classList.add('wheel-logo');
+                logo.style.backgroundImage = `url('/ticklogos/${ticker}.png')`;
+
+                // Rotate the logo back to stay upright
+                logo.style.transform = `rotate(${-rotation}deg)`;
+
+                segment.appendChild(logo);
+                wheel.appendChild(segment);
+
+                // Store references for later use
+                segments.push(segment);
+                logos.push(logo);
+            });
+
+            // Variables for wheel rotation
+            let currentRotation = 0;
+            let isSpinning = false;
+            const slowSpinSpeed = 0.2; // Adjust for desired slow spin speed
+
+            // Function to rotate the wheel slowly
+            function slowSpin() {
+                if (!isSpinning) {
+                    currentRotation = (currentRotation + slowSpinSpeed) % 360;
+                    wheel.style.transform = `rotate(${currentRotation}deg)`;
+                }
+                requestAnimationFrame(slowSpin);
+            }
+
+            // Start the slow spin
+            requestAnimationFrame(slowSpin);
+
+            // Function to cycle central logo
+            let centralLogoIndex = 0;
+            function cycleCentralLogo() {
+                if (!isSpinning) {
+                    centralLogoIndex = (centralLogoIndex + 1) % tickerSet.length;
+                    const ticker = tickerSet[centralLogoIndex];
+                    centralLogo.style.backgroundImage = `url('/ticklogos/${ticker}.png')`;
+                }
+                // Set a random interval between 0.5 to 1.5 seconds
+                const interval = Math.random() * 1000 + 500;
+                setTimeout(cycleCentralLogo, interval);
+            }
+
+            // Start cycling the central logo
+            cycleCentralLogo();
+
+            // Spin functionality and form submission
+            wheel.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                // Validate form inputs
+                const amountValue = amountInput.value;
+                const profitPValue = profitPInput.value;
+
+                if (!amountValue || !profitPValue) {
+                    alert("Please fill in both the amount and profit percentage before spinning the wheel.");
+                    return;
+                }
+
+                isSpinning = true;
+
+                // Calculate total rotation for the fast spin
+                const spinRotation = 3600 + Math.random() * 360; // Randomize the final position
+                const spinDuration = 4000; // Duration in milliseconds
+                const startRotation = currentRotation;
+                const endRotation = currentRotation + spinRotation;
+                const startTime = performance.now();
+
+                function animateSpin(timestamp) {
+                    const elapsed = timestamp - startTime;
+                    if (elapsed < spinDuration) {
+                        const progress = elapsed / spinDuration;
+                        const easeOutProgress = 1 - Math.pow(1 - progress, 3);
+                        const currentSpinRotation = startRotation + (endRotation - startRotation) * easeOutProgress;
+                        wheel.style.transform = `rotate(${currentSpinRotation}deg)`;
+                        requestAnimationFrame(animateSpin);
+                    } else {
+                        // Ensure final rotation is set
+                        currentRotation = endRotation % 360;
+                        wheel.style.transform = `rotate(${currentRotation}deg)`;
+                        isSpinning = false;
+
+                        // Determine the selected ticker based on final rotation
+                        const normalizedRotation = (360 - (currentRotation % 360)) % 360;
+                        const selectedIndex = Math.floor(normalizedRotation / segmentAngle) % numSegments;
+                        const selectedTicker = tickerSet[selectedIndex];
+
+                        // Display the result in the pop-up
+                        resultTicker.textContent = selectedTicker;
+                        resultLogo.src = `/ticklogos/${selectedTicker}.png`;
+                        resultPopup.style.display = 'block';
+
+                        // Continue slow spinning
+                        isSpinning = false;
+
+                        // Set the hidden input value with the selected ticker
+                        selectedTickerInput.value = selectedTicker;
+
+                        // Submit the form via AJAX after a delay, then redirect
+                        setTimeout(() => {
+    // Prepare URL-encoded data
+    const params = new URLSearchParams();
+    params.append('amount', amountValue);
+    params.append('profitP', profitPValue);
+    params.append('selectedTicker', selectedTicker);
+
+    // Send the data via fetch
+    fetch('/yolos/wsryC', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: params.toString(),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Redirect to /yolos after a brief delay
+            setTimeout(() => {
+                window.location.href = '/yolos';
+            }, 2000);
+        } else {
+            alert('Error: ' + (data.error || 'An error occurred.'));
+        }
+    })
+    .catch(error => {
+        console.error('Error submitting form:', error);
+        alert('An error occurred. Please try again.');
     });
-});
-    
-</script>
+}, 2000); // Wait for 2 seconds before submitting
+
+                    }
+                }
+
+                requestAnimationFrame(animateSpin);
+            });
+        });
+    </script>
 </body>
 </html>

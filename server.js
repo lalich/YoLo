@@ -44,7 +44,7 @@ app.use(express.static('public', {
 })); // serve static files from public folder
 
 app.use(express.urlencoded({ extended: true })); // allows req.body to be read from the form.
-
+app.use(express.json()); // allows req.body to be
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
 
